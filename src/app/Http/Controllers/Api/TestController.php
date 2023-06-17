@@ -15,4 +15,11 @@ class TestController extends Controller
             "notes" => $notes
         ]);
     }
+
+    public function env() {
+        return response()->json([
+            "env var" => getenv("APP_NAME"),
+            "env from clound" => getenv("APP_NAME2"),
+        ]);
+    }
 }
