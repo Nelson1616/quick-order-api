@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /app/src
+        volumes:
+            - ./src:/app/src
+        ports:
+            - "8989:80"
