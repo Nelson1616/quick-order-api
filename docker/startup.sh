@@ -12,7 +12,7 @@ php artisan key:generate
 
 cd /var/www/html
 
-sed -i "s,LISTEN_PORT,8989,g" /etc/nginx/nginx.conf
+sed -i "s,LISTEN_PORT,8080,g" /etc/nginx/nginx.conf
 
 php-fpm -D
 
