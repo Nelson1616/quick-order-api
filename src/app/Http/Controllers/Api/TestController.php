@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function test() {
-        $notes = DB::select('SELECT * FROM test_notes tn;');
+        $notes = DB::select('SELECT * FROM restaurants;');
  
         return response()->json([
-            "notes" => $notes
+            "restaurants" => $notes
         ]);
     }
 
