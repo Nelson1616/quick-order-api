@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model
 {
@@ -26,4 +27,14 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
+
+    public function sessionUsers(): HasMany
+    {
+        return $this->hasMany(SessionUser::class, 'user_id', 'id');
+    }
+
+    public function activeSessionUsers(): HasMany
+    {
+        return $this->hasMany(SessionUser::class, 'user_id', 'id')->where('status_id', 1);
+    }
 }

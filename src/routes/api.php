@@ -12,3 +12,5 @@ Route::get('/db',  [TestController::class, 'db']);
 
 Route::post('/login',  [GeneralController::class, 'login']);
 Route::get('/user/{id}',  [GeneralController::class, 'getUser']);
+Route::get('/table/code/{code}', [GeneralController::class, 'getTableByCode']);
+Route::post('/table/insert/new_user', [GeneralController::class, 'insertNewUserOnTable']);
