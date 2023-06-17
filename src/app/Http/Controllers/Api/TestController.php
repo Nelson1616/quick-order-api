@@ -22,4 +22,10 @@ class TestController extends Controller
             "env from clound" => getenv("APP_NAME2"),
         ]);
     }
+
+    public function db() {
+        return response()->json([
+            "db name" => DB::getDatabaseName(),
+        ]);
+    }
 }

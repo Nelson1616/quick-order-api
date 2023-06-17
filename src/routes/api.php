@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/test',  [TestController::class, 'test']);
 Route::get('/env',  [TestController::class, 'env']);
+Route::get('/db',  [TestController::class, 'db']);
