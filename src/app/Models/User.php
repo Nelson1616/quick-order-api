@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model
@@ -35,6 +36,11 @@ class User extends Model
 
     public function activeSessionUsers(): HasMany
     {
-        return $this->hasMany(SessionUser::class, 'user_id', 'id')->where('status_id', 1);
+        return $this->hasMany(SessionUser::class, 'user_id', 'id')->where('status_id', '>', 0);
+    }
+
+    public function restaurant(): BelongsTo
+    {
+        return $this->BelongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\General;
+use App\Models\Product;
 use App\Models\Table;
 use App\Models\User;
 use Exception;
@@ -23,29 +24,61 @@ class GeneralController extends Controller
     private static function getUserRelations(User $user) {
         $user->activeSessionUsers;
 
-        foreach ($user->activeSessionUsers as $sessionUser) {
-            $sessionUser->session;
-            $sessionUser->session->sessionUsers;
+        if ($user->restaurant_id != null) {
+            $user->restaurant;
 
-            foreach ($sessionUser->session->sessionUsers as $sessionUserFromSession) {
-                $sessionUserFromSession->user;
-            }
+            if ($user->restaurant == null) {
+                throw new Exception("Funcionário não possui restaurante cadastrado", 500);
+            } 
 
-            $sessionUser->session->sessionOrders;
+            $user->restaurant->tables;
 
-            foreach ($sessionUser->session->sessionOrders as $sessionOrder) {
-                $sessionOrder->product;
-                
-                $sessionOrder->sessionOrderUsers;
+            foreach ($user->restaurant->tables as $table) {
+                $table->activeSessions;
 
-                foreach ($sessionOrder->sessionOrderUsers as $orderUser) {
-                    $orderUser->user;
+                foreach ($table->activeSessions as $session) {
+                    $session->sessionOrders;
+
+                    foreach ($session->sessionOrders as $sessionOrder) {
+                        $sessionOrder->product;
+    
+                        $sessionOrder->sessionOrderUsers;
+        
+                        foreach ($sessionOrder->sessionOrderUsers as $orderUser) {
+                            $orderUser->sessionUser;
+                            $orderUser->sessionUser->user;
+                        }
+                    }
                 }
             }
-
-            $sessionUser->session->table;
-            $sessionUser->session->table->restaurant;
-            $sessionUser->session->table->restaurant->products;
+        }
+        else {
+            foreach ($user->activeSessionUsers as $sessionUser) {
+                $sessionUser->amount_to_pay = $sessionUser->amountToPay();
+                $sessionUser->session;
+                $sessionUser->session->sessionUsers;
+    
+                foreach ($sessionUser->session->sessionUsers as $sessionUserFromSession) {
+                    $sessionUserFromSession->user;
+                }
+    
+                $sessionUser->session->sessionOrders;
+    
+                foreach ($sessionUser->session->sessionOrders as $sessionOrder) {
+                    $sessionOrder->product;
+    
+                    $sessionOrder->sessionOrderUsers;
+    
+                    foreach ($sessionOrder->sessionOrderUsers as $orderUser) {
+                        $orderUser->sessionUser;
+                        $orderUser->sessionUser->user;
+                    }
+                }
+    
+                $sessionUser->session->table;
+                $sessionUser->session->table->restaurant;
+                $sessionUser->session->table->restaurant->products;
+            }
         }
     }
 
@@ -58,6 +91,18 @@ class GeneralController extends Controller
 
         if ($table->restaurant == null) {
             throw new Exception("Mesa não possui restaurante cadastrado", 500);
+        }
+    }
+
+    private static function verifyProduct(?Product $product) {
+        if ($product == null) {
+            throw new Exception("Produto não encontrado", 404);
+        }
+
+        $product->restaurant;
+
+        if ($product->restaurant == null) {
+            throw new Exception("Produto não possui restaurante cadastrado", 500);
         }
     }
 
@@ -135,7 +180,8 @@ class GeneralController extends Controller
                 [
                     "user_name" => $request->user_name,
                     "user_image_id" => $request->user_image_id, 
-                    "table_id" => $request->table_id], 
+                    "table_id" => $request->table_id
+                ], 
                 [
                     "user_name" => "required|string",
                     "user_image_id" => "required|integer",
@@ -144,7 +190,7 @@ class GeneralController extends Controller
             );
 
             if ($validation->fails()) {
-                throw new Exception("Código inválidos", 400);
+                throw new Exception("Dados inválidos", 400);
             }
 
             $table = General::getTableById($request->table_id);
@@ -172,6 +218,210 @@ class GeneralController extends Controller
             self::verifyUser($user);
 
             General::createSessionUser($user->id, $session->id);
+
+            self::getUserRelations($user);
+
+            return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
+    public function makeOrder(Request $request) {
+        try {
+            $validation = Validator::make(
+                [
+                    "user_id" => $request->user_id,
+                    "session_id" => $request->session_id, 
+                    "product_id" => $request->product_id, 
+                    "quantity" => $request->quantity
+                ], 
+                [
+                    "user_id" => "required|integer",
+                    "session_id" => "required|integer",
+                    "product_id" => "required|integer",
+                    "quantity" => "required|integer|gt:0",
+                ]
+            );
+
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $user = General::getUserById($request->user_id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            if ($user->activeSessionUsers->first() == null) {
+                throw new Exception("Usuário não está em uma sessão", 400);
+            }
+
+            if($user->activeSessionUsers[0]->session_id != $request->session_id) {
+                throw new Exception("Sessão do usuário é diferente da do pedido", 400);
+            }
+
+            $product = General::getProductById($request->product_id);
+
+            self::verifyProduct($product);
+
+            if ($product->restaurant_id != $user->activeSessionUsers[0]->session->table->restaurant_id) {
+                throw new Exception("Produto é de restaurante diferente do solicitado", 400);
+            }
+
+            $sessionOrder = General::createSessionOrder($product->id, $request->session_id, $request->quantity, $product->price);
+
+            if ($sessionOrder == null) {
+                throw new Exception("Erro ao criar pedido", 500);
+            }
+
+            $sessionOrderUser = General::createSessionOrderUser($sessionOrder->id, $user->activeSessionUsers[0]->id);
+
+            if ($sessionOrderUser == null) {
+                throw new Exception("Erro ao vincular usuário ao pedido", 500);
+            }
+
+            $user = General::getUserById($request->user_id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
+    public function payOrders(Request $request) {
+        try {
+            $validation = Validator::make(
+                [
+                    "user_id" => $request->user_id,
+                    "session_id" => $request->session_id, 
+                ], 
+                [
+                    "user_id" => "required|integer",
+                    "session_id" => "required|integer",
+                ]
+            );
+
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $user = General::getUserById($request->user_id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            if ($user->activeSessionUsers->first() == null) {
+                throw new Exception("Usuário não está em uma sessão", 400);
+            }
+
+            if($user->activeSessionUsers[0]->session_id != $request->session_id) {
+                throw new Exception("Sessão do usuário é diferente da do pedido", 400);
+            }
+
+            $orders_to_pay = General::getOrdersToPay($request->user_id);
+
+            foreach ($orders_to_pay as $order) {
+                General::updateOrderUserToPaid($order->session_user_order_id);
+                General::updateOrderAmountLeft($order->session_order_id, $order->amount_left - $order->price_to_pay);
+                General::tryUpdateOrderToPaid($order->session_order_id);
+            }
+
+            General::tryUpdateSessionToPaid($user->activeSessionUsers[0]->session_id);
+
+            $user->activeSessionUsers[0]->update(["status_id" => 0]);
+
+            $user = General::getUserById($request->user_id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
+    public function helpWithOrder(Request $request) {
+        try {
+            $validation = Validator::make(["session_user_id" => $request->session_user_id, "session_order_id" => $request->session_order_id], [
+                "session_user_id" => "required|integer",
+                "session_order_id" => "required|integer",
+            ]);
+            
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $sessionUser = General::getSessionUserById($request->session_user_id);
+
+            if ($sessionUser == null) {
+                throw new Exception("Usuário não encontrado na sessão", 400);
+            }
+
+            $sessionUser->session;
+
+            $sessionOrder = General::getSessionOrderById($request->session_order_id);
+
+            if ($sessionOrder == null) {
+                throw new Exception("Pedido não encontrado na sessão", 400);
+            }
+
+            $sessionOrder->session;
+
+            if ($sessionUser->session->id != $sessionOrder->session->id) {
+                throw new Exception("Pedido e Usuária não são da mesma sessão", 400);
+            }
+
+            General::createSessionOrderUser($sessionOrder->id, $sessionUser->id);
+
+
+            $user = General::getUserById($sessionUser->user->id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
+    public function setOrderAsDelivered(Request $request) {
+        try {
+            $validation = Validator::make(["user_id" => $request->user_id, "session_order_id" => $request->session_order_id], [
+                "user_id" => "required|integer",
+                "session_order_id" => "required|integer",
+            ]);
+            
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $sessionOrder = General::getSessionOrderById($request->session_order_id);
+
+            if ($sessionOrder == null) {
+                throw new Exception("Pedido não encontrado na sessão", 400);
+            }
+
+            $sessionOrder->update(["status_id" => 2]);
+
+
+            $user = General::getUserById($request->user_id);
+
+            self::verifyUser($user);
 
             self::getUserRelations($user);
 

@@ -17,6 +17,7 @@ class SessionUser extends Model
         'status_id',
         'session_id',
         'user_id',
+        'amount_to_pay',
         'updated_at',
         'created_at',
     ];
@@ -31,5 +32,17 @@ class SessionUser extends Model
     public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function amountToPay() : int {
+        $amount = 0;
+
+        $query = General::getOrdersToPay($this->user_id);
+
+        foreach($query as $order) {
+            $amount += $order->price_to_pay;
+        }
+
+        return $amount;
     }
 }

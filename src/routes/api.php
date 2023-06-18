@@ -14,3 +14,7 @@ Route::post('/login',  [GeneralController::class, 'login']);
 Route::get('/user/{id}',  [GeneralController::class, 'getUser']);
 Route::get('/table/code/{code}', [GeneralController::class, 'getTableByCode']);
 Route::post('/table/insert/new_user', [GeneralController::class, 'insertNewUserOnTable']);
+Route::post('/table/order/make', [GeneralController::class, 'makeOrder']);
+Route::post('/table/order/pay', [GeneralController::class, 'payOrders']);
+Route::post('/table/order/help', [GeneralController::class, 'helpWithOrder']);
+Route::post('/table/order/delivered', [GeneralController::class, 'setOrderAsDelivered']);

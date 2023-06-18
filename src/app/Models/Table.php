@@ -36,6 +36,6 @@ class Table extends Model
 
     public function activeSessions(): HasMany
     {
-        return $this->hasMany(Session::class, 'table_id', 'id')->where('status_id', 1);
+        return $this->hasMany(Session::class, 'table_id', 'id')->where('status_id', '>', 0);
     }
 }

@@ -29,7 +29,7 @@ class Restaurant extends Model
 
     public function tables(): HasMany
     {
-        return $this->hasMany(Tables::class, 'restaurant_id', 'id');
+        return $this->hasMany(Table::class, 'restaurant_id', 'id');
     }
 
     public function products(): HasMany
