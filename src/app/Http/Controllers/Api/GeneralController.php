@@ -225,6 +225,8 @@ class GeneralController extends Controller
 
             General::createSessionUser($user->id, $session->id);
 
+            $user = General::getUserById($user->id);
+
             self::getUserRelations($user);
 
             return self::successdResponse($user);
