@@ -37,6 +37,12 @@ class GeneralController extends Controller
                 $table->activeSessions;
 
                 foreach ($table->activeSessions as $session) {
+                    $session->sessionUsers;
+    
+                    foreach ($session->sessionUsers as $sessionUserFromSession) {
+                        $sessionUserFromSession->user;
+                    }
+
                     $session->sessionOrders;
 
                     foreach ($session->sessionOrders as $sessionOrder) {
