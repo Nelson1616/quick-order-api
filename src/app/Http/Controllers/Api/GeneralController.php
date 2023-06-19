@@ -407,6 +407,53 @@ class GeneralController extends Controller
         } 
     }
 
+    public function notHelpWithOrder(Request $request) {
+        try {
+            $validation = Validator::make(["session_user_id" => $request->session_user_id, "session_order_id" => $request->session_order_id], [
+                "session_user_id" => "required|integer",
+                "session_order_id" => "required|integer",
+            ]);
+            
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $sessionUser = General::getSessionUserById($request->session_user_id);
+
+            if ($sessionUser == null) {
+                throw new Exception("Usuário não encontrado na sessão", 400);
+            }
+
+            $sessionUser->session;
+
+            $sessionOrder = General::getSessionOrderById($request->session_order_id);
+
+            if ($sessionOrder == null) {
+                throw new Exception("Pedido não encontrado na sessão", 400);
+            }
+
+            $sessionOrder->session;
+
+            if ($sessionUser->session->id != $sessionOrder->session->id) {
+                throw new Exception("Pedido e Usuária não são da mesma sessão", 400);
+            }
+
+            General::removeSessionOrderUser($sessionOrder->id, $sessionUser->id);
+
+
+            $user = General::getUserById($sessionUser->user->id);
+
+            self::verifyUser($user);
+
+            self::getUserRelations($user);
+
+            return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
     public function setOrderAsDelivered(Request $request) {
         try {
             $validation = Validator::make(["user_id" => $request->user_id, "session_order_id" => $request->session_order_id], [

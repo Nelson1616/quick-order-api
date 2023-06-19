@@ -79,6 +79,13 @@ class General extends Model
         ]);
     }
 
+    public static function removeSessionOrderUser(int $session_order_id, int $session_user_id) {
+        SessionOrderUser::where(
+            'session_order_id', $session_order_id)
+            ->where('session_user_id', $session_user_id)
+            ->delete();
+    }
+
     public static function getSessionOrderUserById(int $session_order_user_id) : ?SessionOrderUser {
         return SessionOrderUser::find($session_order_user_id);
     }

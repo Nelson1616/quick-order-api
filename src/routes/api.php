@@ -17,4 +17,5 @@ Route::post('/table/insert/new_user', [GeneralController::class, 'insertNewUserO
 Route::post('/table/order/make', [GeneralController::class, 'makeOrder']);
 Route::post('/table/order/pay', [GeneralController::class, 'payOrders']);
 Route::post('/table/order/help', [GeneralController::class, 'helpWithOrder']);
+Route::post('/table/order/not_help', [GeneralController::class, 'notHelpWithOrder']);
 Route::post('/table/order/delivered', [GeneralController::class, 'setOrderAsDelivered']);
