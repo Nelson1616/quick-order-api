@@ -438,6 +438,12 @@ class GeneralController extends Controller
                 throw new Exception("Pedido e Usuária não são da mesma sessão", 400);
             }
 
+            $sessionOrder->sessionOrderUsers;
+
+            if (count($sessionOrder->sessionOrderUsers) < 2) {
+                throw new Exception("Não há usuários suficentes ajudando com esse pedido", 500);
+            }
+
             General::removeSessionOrderUser($sessionOrder->id, $sessionUser->id);
 
 
