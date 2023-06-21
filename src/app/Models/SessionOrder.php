@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
 
 class SessionOrder extends Model
 {
@@ -39,5 +40,29 @@ class SessionOrder extends Model
     public function product(): HasOne
     {
         return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
+    public static function createNew(int $productId, int $sessionId, int $quantity, int $price) : self {
+        return self::create([
+            'product_id' => $productId,
+            'session_id' => $sessionId,
+            'quantity' => $quantity,
+            'amount' => $price * $quantity,
+            'amount_left' => $price * $quantity,
+        ]);
+    }
+
+    public static function tryUpdateToPaid(int $session_order_id) {
+        $query = DB::select("SELECT
+        sou.*
+        FROM session_orders so 
+        JOIN session_order_users sou ON sou.session_order_id = so.id
+        WHERE 
+        so.id = $session_order_id
+        AND sou.status_id > 0");
+
+        if (empty($query)) {
+            self::find($session_order_id)->update(["status_id" => 0]);
+        }
     }
 }

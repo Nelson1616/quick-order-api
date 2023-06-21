@@ -38,4 +38,9 @@ class Table extends Model
     {
         return $this->hasMany(Session::class, 'table_id', 'id')->where('status_id', '>', 0);
     }
+
+    public static function getByCode(string $code) : ?self {
+        return self::where('enter_code', $code)
+        ->first();
+    }
 }

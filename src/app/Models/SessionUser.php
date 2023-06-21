@@ -37,12 +37,19 @@ class SessionUser extends Model
     public function amountToPay() : int {
         $amount = 0;
 
-        $query = General::getOrdersToPay($this->user_id);
+        $query = User::getOrdersToPay($this->user_id);
 
         foreach($query as $order) {
             $amount += $order->price_to_pay;
         }
 
         return $amount;
+    }
+
+    public static function createNew(int $userId, int $sessionId) : self {
+        return self::create([
+            'user_id' => $userId,
+            'session_id' => $sessionId,
+        ]);
     }
 }
