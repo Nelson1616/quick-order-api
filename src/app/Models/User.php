@@ -100,8 +100,8 @@ class User extends Model
             JOIN session_order_users sou2 ON sou2.session_order_id = so2.id 
             where so2.id = so.id
             AND sou2.status_id != 0
-            AND sou2.status_id != 4
-            AND sou2.status_id != 5
+            AND so2.status_id != 4
+            AND so2.status_id != 0
         ) as users_to_div,
         (so.amount_left / (
             SELECT
@@ -110,8 +110,8 @@ class User extends Model
             JOIN session_order_users sou2 ON sou2.session_order_id = so2.id 
             where so2.id = so.id
             AND sou2.status_id != 0
-            AND sou2.status_id != 4
-            AND sou2.status_id != 5
+            AND so2.status_id != 4
+            AND so2.status_id != 0
             )
         ) as price_to_pay
         FROM users u 
@@ -122,7 +122,7 @@ class User extends Model
         where 
         u.id = $userId
         AND sou.status_id != 0
-        AND sou.status_id != 4
-        AND sou.status_id != 5");
+        AND so.status_id != 0
+        AND so.status_id != 4");
     }
 }

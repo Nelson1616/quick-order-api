@@ -147,6 +147,16 @@ class GeneralController extends Controller
 
             self::verifyTable($table);
 
+            $table->activeSessions;
+
+            foreach ($table->activeSessions as $session) {
+                $session->sessionUsers;
+
+                foreach ($session->sessionUsers as $sessionUser) {
+                    $sessionUser->user;
+                }
+            }
+
             return self::successdResponse($table);
         }
         catch (Exception $e) {
@@ -328,6 +338,64 @@ class GeneralController extends Controller
             $user->getRelations();
 
             return self::successdResponse($user);
+        }
+        catch (Exception $e) {
+            return self::failedResponse($e);
+        } 
+    }
+
+    public function waiterPayOrders(Request $request) {
+        try {
+            $validation = Validator::make(
+                [
+                    "official_id" => $request->official_id,
+                    "user_id" => $request->user_id,
+                    "session_id" => $request->session_id, 
+                ], 
+                [
+                    "official_id" => "required|integer",
+                    "user_id" => "required|integer",
+                    "session_id" => "required|integer",
+                ]
+            );
+
+            if ($validation->fails()) {
+                throw new Exception("Dados inválidos", 400);
+            }
+
+            $user = User::find($request->user_id);
+
+            self::verifyUser($user);
+
+            $user->getRelations();
+
+            if ($user->activeSessionUsers->first() == null) {
+                throw new Exception("Usuário não está em uma sessão", 400);
+            }
+
+            if($user->activeSessionUsers[0]->session_id != $request->session_id) {
+                throw new Exception("Sessão do usuário é diferente da do pedido", 400);
+            }
+
+            $orders_to_pay = User::getOrdersToPay($request->user_id);
+
+            foreach ($orders_to_pay as $order) {
+                SessionOrderUser::find($order->session_user_order_id)->update(["status_id" => 0]);
+                SessionOrder::find($order->session_order_id)->update(["amount_left" => $order->amount_left - $order->price_to_pay]);
+                SessionOrder::tryUpdateToPaid($order->session_order_id);
+            }
+
+            $user->activeSessionUsers[0]->update(["status_id" => 0]);
+
+            Session::tryUpdateToFinished($user->activeSessionUsers[0]->session_id);
+
+            $official = Official::find($request->official_id);
+
+            self::verifyOfficial($official);
+
+            $official->getRelations();
+
+            return self::successdResponse($official);
         }
         catch (Exception $e) {
             return self::failedResponse($e);
@@ -589,11 +657,11 @@ class GeneralController extends Controller
         try {
             $validation = Validator::make(
                 [
-                    "user_id" => $request->user_id,
+                    "official_id" => $request->official_id,
                     "session_waiter_call_id" => $request->session_waiter_call_id, 
                 ], 
                 [
-                    "user_id" => "required|integer",
+                    "official_id" => "required|integer",
                     "session_waiter_call_id" => "required|integer",
                 ]
             );
@@ -608,23 +676,19 @@ class GeneralController extends Controller
                 throw new Exception("Chamado não encontrado", 404);
             }
 
-            $user = User::find($request->user_id);
+            $official = Official::find($request->official_id);
 
-            self::verifyUser($user);
-
-            if ($user->restaurant_id == null) {
-                throw new Exception("Usuário inválido para esta ação", 400);
-            }
+            self::verifyOfficial($official);
 
             $waiterCall->update(["status_id" => 2]);
 
-            $user = User::find($request->user_id);
+            $official = Official::find($request->official_id);
 
-            self::verifyUser($user);
+            self::verifyOfficial($official);
 
-            $user->getRelations();
+            $official->getRelations();
 
-            return self::successdResponse($user);
+            return self::successdResponse($official);
         }
         catch (Exception $e) {
             return self::failedResponse($e);

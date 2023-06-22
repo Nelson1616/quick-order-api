@@ -16,3 +16,4 @@ Route::post('/table/order/update_status', [GeneralController::class, 'updateOrde
 Route::post('/table/order/cancel', [GeneralController::class, 'cancelOrder']);
 Route::post('/table/waiter/call/make', [GeneralController::class, 'makeWaiterCall']);
 Route::post('/table/waiter/call/update', [GeneralController::class, 'updateWaiterCall']);
+Route::post('/table/order/waiter/pay', [GeneralController::class, 'waiterPayOrders']);

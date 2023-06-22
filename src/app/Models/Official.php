@@ -48,6 +48,8 @@ class Official extends Model
 
                 foreach ($session->sessionUsers as $sessionUser) {
                     $sessionUser->user;
+                    $sessionUser->session;
+                    $sessionUser->session->table;
                 }
 
                 $session->sessionOrders;
@@ -55,11 +57,17 @@ class Official extends Model
                 foreach ($session->sessionOrders as $sessionOrder) {
                     $sessionOrder->product;
 
+                    $sessionOrder->session;
+
+                    $sessionOrder->session->table;
+
                     $sessionOrder->sessionOrderUsers;
 
                     foreach ($sessionOrder->sessionOrderUsers as $orderUser) {
                         $orderUser->sessionUser;
                         $orderUser->sessionUser->user;
+                        $orderUser->sessionUser->session;
+                        $orderUser->sessionUser->session->table;
                     }
                 }
 
@@ -68,6 +76,10 @@ class Official extends Model
                 foreach ($session->sessionWaiterCalls as $sessionWaiterCall) {
                     $sessionWaiterCall->sessionUser;
                     $sessionWaiterCall->sessionUser->user;
+                    $sessionWaiterCall->sessionUser->session;
+                    $sessionWaiterCall->sessionUser->session->table;
+                    $sessionWaiterCall->session;
+                    $sessionWaiterCall->session->table;
                 }
             }
         }
