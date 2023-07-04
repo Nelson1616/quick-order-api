@@ -41,7 +41,7 @@ class Session extends Model
 
     public function sessionWaiterCalls(): HasMany
     {
-        return $this->hasMany(sessionWaiterCall::class, 'session_id', 'id');
+        return $this->hasMany(SessionWaiterCall::class, 'session_id', 'id');
     }
 
     public static function createNew(int $table_id) : self {
