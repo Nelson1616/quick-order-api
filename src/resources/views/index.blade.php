@@ -1874,7 +1874,9 @@
 					<div class="hero-inner">
 						<div class="hero-copy">
 							<h1 class="hero-title mt-0">QUICK ORDER</h1>
-							<p class="hero-paragraph">Aplicativo para restaurantes!</p>
+							<p class="hero-paragraph">O QuickOrder foi feito pra você, dono de restaurante, que está cansado de gastar com várias cadernetas e que busca mais praticidade na hora de anotar os pedidos dos clientes. Com o app, seu cliente tem a autonomia de fazer ele próprio seu pedido, dividir o pagamento dos itens com os outros usuários da mesa e muito mais!</p>
+
+							<p class="hero-paragraph">O QuickOrder surgiu de uma necessidade de reunir cardápio e pedidos em um só lugar. A ideia principal do app é facilitar o modo como o cliente faz o pedido, e com isso trazer mais autonomia a ele. Com o QuickOrder o cliente pode ver todo o cardápio do restaurante, entrar em uma sessão, que é identificada por mesa. Cada mesa tem uma sessão e pode conter vários usuários, que podem realizar pedidos e até mesmo dividir a responsabilidade de itens específicos. Isso não é incrível? Tudo isso você encontra nesse app, baixe e aproveite!</p>
 
 						</div>
 						<div class="mockup-container">
@@ -1893,8 +1895,8 @@
 									<img class="device-mockup is-revealing" src="images/login.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Login ou QrCode</h3>
+									<p class="m-0">Uma das facilidades do app é não precisar de um login, apesar de ter a opção para quem gosta de ter um histórico dos lugares que frequentou. Com o QrCode, o usuário pode entrar direto na sessão sem complicações.</p>
 								</div>
 							</div>
 						</div>
@@ -1908,8 +1910,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Iniciar Sessão</h3>
+									<p class="m-0">Antes de iniciar sessão, o usuário pode se identificar e escolher um avatar pra representá-lo. Além disso, o cliente também pode ver uma breve descrição do restaurante.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/criar_perfil.png" alt="iPhone Feature 01">
@@ -1928,8 +1930,8 @@
 									<img class="device-mockup is-revealing" src="images/mesa_cliente.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Cardápio / Tela de Pedidos</h3>
+									<p class="m-0">Cada usuário tem uma comanda própria, podendo fazer seus pedidos de forma individual mesmo estando em uma mesa com outras pessoas.</p>
 								</div>
 							</div>
 						</div>
@@ -1943,8 +1945,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Mesas</h3>
+									<p class="m-0">Além de login próprio para consumidores também há login de funcionário, e uma das abas é a de Mesas, onde pode-se encontrar todas as mesas de um restaurante e seus respectivos usuários.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/mesas.png" alt="iPhone Feature 01">
@@ -1963,8 +1965,8 @@
 									<img class="device-mockup is-revealing" src="images/pedidos_mesa.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Pedidos</h3>
+									<p class="m-0">O funcionário do estabelecimento tem opções de aceitar o pedido, entregá-lo e cancelá-lo. O cancelamento acarreta na exclusão do pedido.</p>
 								</div>
 							</div>
 						</div>
@@ -1978,8 +1980,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+								<h3 class="mt-0 mb-16">Conta</h3>
+									<p class="m-0">Cada cliente tem sua conta individual, e apesar de poder fazer o pedido também individual, nosso app conta com a opção de dividir o valor dos pedidos. Isso acontece quando o cliente clica em "Dividir Pedido", mas caso haja alguma intercorrência pode deixar de dividir o pedido também.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/conta_clinete.png" alt="iPhone Feature 01">
@@ -2001,8 +2003,8 @@
 									<img class="device-mockup is-revealing" src="images/pedido_recebido.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+								<h3 class="mt-0 mb-16">Status do Pedido</h3>
+									<p class="m-0">Como forma de identificar os status dos pedidos, escolhemos algumas cores que identificam eles. Amarelo para pedidos pendentes de aprovação e azul para pedidos aceitos.</p>
 								</div>
 							</div>
 						</div>
@@ -2016,8 +2018,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+								<h3 class="mt-0 mb-16">Chamar garçom</h3>
+									<p class="m-0">Uma das melhores funcionalidades da aplicação é o botão de chamar garçom. Ao apertar nele, o garçom é acionado sem que o cliente precise ficar chamando atenção dele.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/chamar_waiter.png" alt="iPhone Feature 01">
@@ -2037,8 +2039,8 @@
 									<img class="device-mockup is-revealing" src="images/chamados.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+								<h3 class="mt-0 mb-16">Chamados</h3>
+									<p class="m-0">Ao acionar o botão, o chamado aparece na aba Chamados do funcionário onde aparecem tanto o cliente quanto a mesa de onde veio o chamado. O funcionário pode dar o chamado como concluído depois de atendê-lo.</p>
 								</div>
 							</div>
 						</div>
@@ -2052,8 +2054,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Pagamento</h3>
+									<p class="m-0">Na opção de pagar conta, o usuário tem três opções: chamar o garçom, pagar com Pix ou pagar com cartão. Cada cliente pode escolher a melhor opção para o momento.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/pagar_cliente.png" alt="iPhone Feature 01">
@@ -2072,8 +2074,8 @@
 									<img class="device-mockup is-revealing" src="images/pagar_conta.png" alt="iPhone Feature 01">
 								</div>
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Encerrar sessão</h3>
+									<p class="m-0">O funcionário pode encerrar a sessão do cliente ao clicar no seu avatar em qualquer tela, e depois clicar no botão de Pagar Conta.</p>
 								</div>
 							</div>
 						</div>
@@ -2087,8 +2089,8 @@
 						<div class="container">
 							<div class="feature-extended">
 								<div class="feature-extended-body is-revealing">
-									<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-									<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+									<h3 class="mt-0 mb-16">Status</h3>
+									<p class="m-0">Outras cores que identificam os pedidos são verde, que conta como pedido já pago, e branco para pedido entregue. Já os status dos usuários são azul, para clientes ativos, e verdes para clientes com sessão encerrada/paga.</p>
 								</div>
 								<div class="feature-extended-image">
 									<img class="device-mockup is-revealing" src="images/clientes_pagos.png" alt="iPhone Feature 01">
@@ -2112,7 +2114,7 @@
 						<div class="cta-inner section-inner">
 							<div class="cta-header text-center">
 								<h2 class="section-title mt-0">Fique ligado!</h2>
-								<p class="section-paragraph">Novas features e atualizações estão por vir! (Assir que o professor Bruno der 10 na nossa média XD )</p>
+								<p class="section-paragraph">Novas features e atualizações estão por vir! (Assim que o professor Bruno nos der 10 de média 😜)</p>
 							</div>
 						</div>
 					</div>
